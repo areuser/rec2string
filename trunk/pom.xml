@@ -18,8 +18,8 @@
       </developer>
   </developers>
   <scm>
-      <connection>scm:svn:http://rec2string.googlecode.com/svn/tags/rec2string-2.1.0</connection>
-      <developerConnection>scm:svn:https://rec2string.googlecode.com/svn/tags/rec2string-2.1.0</developerConnection>
+      <connection>scm:svn:http://rec2string.googlecode.com/svn/tags</connection>
+      <developerConnection>scm:svn:https://rec2string.googlecode.com/svn/tags</developerConnection>
   </scm>  
   <distributionManagement>
 	  <repository>
