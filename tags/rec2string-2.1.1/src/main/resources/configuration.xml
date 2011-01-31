@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xmlns:util="http://www.springframework.org/schema/util"
+        xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-2.5.xsd
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util-2.5.xsd"
+	default-dependency-check="none" default-lazy-init="false">
+    
+    <!-- ========================= ANNOTATION DEFINITIONS ========================= -->
+    <!--
+        Activates various annotations to be detected in bean classes: Spring's
+        @Required and @Autowired, as well as JSR 250's @PostConstruct,
+        @PreDestroy and @Resource (if available) and JPA's @PersistenceContext
+        and @PersistenceUnit (if available).
+    -->
+    <context:annotation-config />
+    <!--
+        scans the classpath; autodetects all classes annotated with @Component, @Service,
+        @MyRepository, or @Controller; and automatically registers them as Spring-managed components
+    -->
+    <context:component-scan base-package="nl.ucan"/>
+
+    <!-- Please specify your own datasource properties-->
+   <bean id="dataSource"    class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
+        <property name="driverClassName"><value>oracle.jdbc.driver.OracleDriver</value></property>
+        <property name="url"><value>jdbc:oracle:thin:@SERVER-L7.multi-mit.com:1521:colw</value></property>
+        <property name="username"><value>username</value></property>
+        <property name="password"><value>password</value></property>
+        <property name="suppressClose"><value>true</value></property>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+         <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="codeGen" class="nl.ucan.rec2string.compiler.CodeGen">
+        <constructor-arg value="c:/temp"/>
+        <constructor-arg value="emp_rec2string_pck"/>
+        <constructor-arg ref="codeNodeDAO"/>
+        <property name="writers">
+            <list>
+                <bean class="nl.ucan.rec2string.Rec2StringWriter"/>
+            </list>
+        </property>
+        <property name="process">
+            <list>
+                <value>ORCA_RA_PLSQL_OWNER;RA_SMART_PRSN_GET</value>
+                <value>ORCA_RA_PLSQL_OWNER;RA_SMART_ADRS_GET</value>
+                <value>ORCA_RA_PLSQL_OWNER;RA_SMART_CMCD_GET</value>
+                <value>ORCA_RA_PLSQL_OWNER;RA_SMART_CLAS_GET</value>
+                <value>ORCA_RA_PLSQL_OWNER;RA_SMART_UCLA_GET</value>
+                <value>ORCA_RA_PLSQL_OWNER;RA_SMART_RMRK_GET</value>
+                <value>ORCA_CM_PLSQL_OWNER;CM_LOGIC_EVNT_GET</value>
+                <value>ORCA_PA_PLSQL_OWNER;PA_LOGIC_AGMT_GET</value>
+                <value>ORCA_RA_PLSQL_OWNER;RA_SMART_PROP_GET</value>
+                <value>ORCA_RA_PLSQL_OWNER;RA_SMART_RELT_GET</value>
+                <value>ORCA_RA_PLSQL_OWNER;RA_SMART_ORGN_GET</value>
+                <value>ORCA_RA_PLSQL_OWNER;RA_SMART_FUNC_GET</value>
+                <value>ORCA_RA_PLSQL_OWNER;RA_SMART_ASCN_GET</value>
+                <value>ORCA_RA_PLSQL_OWNER;RA_SMART_ROLE_GET</value>
+                <value>ORCA_MT_DATA_OWNER;MMIT_LOAD_META_PCK.SET_DATAROW</value>
+                <value>ORCA_MT_DATA_OWNER;UNO_XML2REC_PCK.DUMMY</value>
+                <!--
+                    <value>owner;procedure name</value>
+                    <value>owner;packageName.procedure name</value>
+                -->                    
+            </list>
+        </property>           
+    </bean>
+
+    <bean id="codeNodeDAO" class="nl.ucan.rec2string.compiler.CodeNodeDAO">
+        <constructor-arg ref="jdbcTemplate"/>
+    </bean>
+</beans>
