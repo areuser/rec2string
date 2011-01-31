@@ -3,7 +3,7 @@
  <groupId>nl.ucan</groupId>
  <artifactId>rec2string</artifactId>
  <packaging>jar</packaging>
- <version>2.1.1</version>
+ <version>2.1.2-SNAPSHOT</version>
  <name>rec2string</name>
   <developers>
       <developer>
@@ -18,8 +18,8 @@
       </developer>
   </developers>
   <scm>
-      <connection>scm:svn:http://rec2string.googlecode.com/svn/tags/rec2string-2.1.1</connection>
-      <developerConnection>scm:svn:https://rec2string.googlecode.com/svn/tags/rec2string-2.1.1</developerConnection>
+      <connection>scm:svn:http://rec2string.googlecode.com/svn/tags</connection>
+      <developerConnection>scm:svn:https://rec2string.googlecode.com/svn/tags</developerConnection>
   </scm>  
   <distributionManagement>
 	  <repository>
